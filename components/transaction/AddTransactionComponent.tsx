@@ -1,11 +1,9 @@
-// components/transaction/AddTransactionComponent.tsx
 import React from "react";
 import {
   StyleSheet
 } from "react-native";
 import * as z from 'zod';
 
-// If using a Transaction type from your domain:
 import { ThemedButton } from "@/components/ThemedButton";
 import { ThemedView } from "@/components/ThemedView";
 import { useTransactionStore } from "@/stores/useTransactionStore";
@@ -13,9 +11,9 @@ import { TransactionCategory } from "@/types/tranCategory";
 import { TransactionType } from "@/types/transactionType";
 import { useRouter } from "expo-router";
 
-import { FormInput } from "@/components/form/FormInput";
+import { FormTextInput } from "@/components/form/FormTextInput";
 import { zodResolver } from '@hookform/resolvers/zod';
-import { useForm, FormProvider } from "react-hook-form";
+import { FormProvider, useForm } from "react-hook-form";
 
 const transactionSchema = z.object({
   amount: z
@@ -41,10 +39,7 @@ export function AddTransactionComponent() {
   });
 
   const onSubmit = (data : TransactionFormValues) => {
-    // Convert amount from string to number
     const numericAmount = parseFloat(data.amount);
-
-    // Now call Zustand's addTransaction
     addTransaction({
       id: `txn-${Date.now()}`,
       date: new Date(),
@@ -56,9 +51,7 @@ export function AddTransactionComponent() {
       tags: [],
     });
 
-    // Optionally reset the form
     formMethods.reset();
-    //router.push('/(tabs)/(transactions)');
     router.back();
   };
 
@@ -66,15 +59,15 @@ export function AddTransactionComponent() {
   return (
     <FormProvider {...formMethods}>
       <ThemedView style={styles.container}>
-      <FormInput
+      <FormTextInput
         name="amount"
         label="Amount"
         placeholder="Enter amount"
         containerStyle={styles.inputGroup}
-        inputProps={{ keyboardType: 'numeric' }}
+        {...{ keyboardType: 'numeric' }}
       />
 
-      <FormInput
+      <FormTextInput
         name="description"
         label="Description"
         placeholder="Optional description"

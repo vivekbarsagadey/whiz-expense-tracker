@@ -7,6 +7,8 @@ import { ThemedView } from '../ThemedView';
 
 interface FormTextInputProps extends TextInputProps {
   name: string;
+  label: string;
+  placeholder?: string;
   containerStyle?: StyleProp<ViewStyle>;
   lightColor?: string;
   darkColor?: string;
@@ -14,6 +16,8 @@ interface FormTextInputProps extends TextInputProps {
 
 export function FormTextInput({
   name,
+  label,
+  placeholder,
   containerStyle,
   lightColor,
   darkColor,
@@ -25,6 +29,7 @@ export function FormTextInput({
 
   return (
     <ThemedView style={[styles.container, containerStyle]}>
+      <ThemedText style={styles.label}>{label}</ThemedText>
       <Controller
         control={control}
         name={name}
@@ -39,6 +44,7 @@ export function FormTextInput({
               value={value}
               onBlur={onBlur}
               onChangeText={onChange}
+              placeholder={placeholder}
               {...rest}
             />
             {error && (
@@ -55,7 +61,12 @@ export function FormTextInput({
 
 const styles = StyleSheet.create({
   container: {
-    marginVertical: 4,
+    marginBottom: 16, // space out each input group
+  },
+  label: {
+    marginBottom: 4,
+    fontWeight: '600',
+    fontSize: 16,
   },
   textInput: {
     borderWidth: StyleSheet.hairlineWidth,
