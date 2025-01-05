@@ -3,8 +3,6 @@ import React, { useState } from "react";
 import {
   Platform,
   StyleSheet,
-  Text,
-  TouchableOpacity,
   View
 } from "react-native";
 
@@ -88,43 +86,13 @@ export default function TabLayout() {
         
       </Modal> */}
 
-      <TouchableOpacity
-        style={styles.floatingButton}
-        onPress={() => {
-          //setIsModalVisible(true);
-          router.push('/(tabs)/(transactions)/add-transaction');
-        }}
-      >
-        <Text style={styles.plusText}>+</Text>
-      </TouchableOpacity>
+      
     </View>
   );
 }
 
 const styles = StyleSheet.create({
-  floatingButton: {
-    position: "absolute",
-    // Place the button a bit above the bottom of the screen (or the tab bar).
-    bottom: 70,
-    alignSelf: "center", // center horizontally
-    width: 60,
-    height: 60,
-    borderRadius: 30,
-    backgroundColor: "#007AFF",
-    alignItems: "center",
-    justifyContent: "center",
-    // Example shadow/elevation
-    shadowColor: "#000",
-    shadowOpacity: 0.2,
-    shadowOffset: { width: 0, height: 2 },
-    shadowRadius: 4,
-    elevation: 6,
-  },
-  plusText: {
-    color: "#fff",
-    fontSize: 28,
-    fontWeight: "bold",
-  },
+  
   modalContainer: {
     //flex: 1,
     top: 100,

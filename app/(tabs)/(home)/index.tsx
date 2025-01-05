@@ -1,11 +1,13 @@
-import { Image, StyleSheet, Platform } from 'react-native';
+import { Image, StyleSheet, Platform, TouchableOpacity } from 'react-native';
 
 import { HelloWave } from '@/components/HelloWave';
 import ParallaxScrollView from '@/components/ParallaxScrollView';
 import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
+import { useRouter } from 'expo-router';
 
 export default function HomeScreen() {
+  const router = useRouter();
   return (
     <ParallaxScrollView
       headerBackgroundColor={{ light: '#A1CEDC', dark: '#1D3D47' }}
@@ -18,6 +20,16 @@ export default function HomeScreen() {
       <ThemedView style={styles.titleContainer}>
         <ThemedText type="title">This is Home Page</ThemedText>
       </ThemedView>
+
+      <TouchableOpacity
+              style={styles.floatingButton}
+              onPress={() => {
+                //setIsModalVisible(true);
+                router.push('/(tabs)/(transactions)/add-transaction');
+              }}
+            >
+              <ThemedText style={styles.plusText}>+</ThemedText>
+      </TouchableOpacity>
       
     </ParallaxScrollView>
   );
@@ -39,5 +51,28 @@ const styles = StyleSheet.create({
     bottom: 0,
     left: 0,
     position: 'absolute',
+  },
+  floatingButton: {
+    position: "sticky",
+    // Place the button a bit above the bottom of the screen (or the tab bar).
+    bottom: 70,
+    alignSelf: "center", // center horizontally
+    width: 60,
+    height: 60,
+    borderRadius: 30,
+    backgroundColor: "#007AFF",
+    alignItems: "center",
+    justifyContent: "center",
+    // Example shadow/elevation
+    shadowColor: "#000",
+    shadowOpacity: 0.2,
+    shadowOffset: { width: 0, height: 2 },
+    shadowRadius: 4,
+    elevation: 6,
+  },
+  plusText: {
+    color: "#fff",
+    fontSize: 28,
+    fontWeight: "bold",
   },
 });
