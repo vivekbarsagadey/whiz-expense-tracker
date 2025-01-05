@@ -1,134 +1,98 @@
 // components/transaction/AddTransactionComponent.tsx
-import React, { useState } from "react";
+import React from "react";
 import {
-    StyleSheet,
-    TextInput
+  StyleSheet
 } from "react-native";
+import * as z from 'zod';
 
 // If using a Transaction type from your domain:
+import { ThemedButton } from "@/components/ThemedButton";
+import { ThemedView } from "@/components/ThemedView";
 import { useTransactionStore } from "@/stores/useTransactionStore";
 import { TransactionCategory } from "@/types/tranCategory";
 import { TransactionType } from "@/types/transactionType";
 import { useRouter } from "expo-router";
-import { ThemedButton } from "../ThemedButton";
-import { ThemedText } from "../ThemedText";
-import { ThemedView } from "../ThemedView";
 
+import { FormInput } from "@/components/form/FormInput";
+import { zodResolver } from '@hookform/resolvers/zod';
+import { useForm, FormProvider } from "react-hook-form";
+
+const transactionSchema = z.object({
+  amount: z
+    .string()
+    .min(1, 'Amount is required')
+    .regex(/^[0-9]+(\.[0-9]+)?$/, 'Must be a valid number'),
+  description: z.string().optional(),
+});
+
+type TransactionFormValues = z.infer<typeof transactionSchema>;
 
 export function AddTransactionComponent() {
-    const router = useRouter();
-  const [amount, setAmount] = useState("");
-  const [description, setDescription] = useState("");
+  
+  const router = useRouter();
   const addTransaction = useTransactionStore((state) => state.addTransaction);
 
-  const handleSavePress = () => {
+  const formMethods = useForm<TransactionFormValues>({
+    resolver: zodResolver(transactionSchema),
+    defaultValues: {
+      amount: '',
+      description: '',
+    },
+  });
+
+  const onSubmit = (data : TransactionFormValues) => {
+    // Convert amount from string to number
+    const numericAmount = parseFloat(data.amount);
+
+    // Now call Zustand's addTransaction
     addTransaction({
       id: `txn-${Date.now()}`,
       date: new Date(),
       type: TransactionType.INCOME,
       category: TransactionCategory.GROCERIES,
-      amount: Number(amount),
+      amount: numericAmount,
       currency: "INR",
-      description,
+      description : data.description || '',
       tags: [],
     });
-    //onClose();
-    setAmount("");
-    setDescription("");
-    router.push('/(tabs)/(transactions)');
+
+    // Optionally reset the form
+    formMethods.reset();
+    //router.push('/(tabs)/(transactions)');
+    router.back();
   };
 
+  
   return (
-    <ThemedView style={styles.container}>
-      <ThemedView style={styles.mainContainer}>
-        <ThemedView style={styles.row}>
-          <ThemedText type="defaultSemiBold">Amount</ThemedText>
-          <TextInput
-          style={styles.input}
-          value={amount}
-          keyboardType="numeric"
-          onChangeText={setAmount}
-          placeholder="Enter amount"
-        />
-        </ThemedView>
-        <ThemedView style={styles.row}>
-          <ThemedText type="defaultSemiBold">Description</ThemedText>
-          <TextInput
-          style={styles.input}
-          value={description}
-          onChangeText={setDescription}
-          placeholder="Optional description"
-        />
-        </ThemedView>
-      </ThemedView>
-      <ThemedView style={styles.footerContainer}>
-        <ThemedButton
-          variant="primary"
-          title="Save Transaction"
-          style={styles.button}
-          onPress={handleSavePress}
-        />
-        
-      </ThemedView>
+    <FormProvider {...formMethods}>
+      <ThemedView style={styles.container}>
+      <FormInput
+        name="amount"
+        label="Amount"
+        placeholder="Enter amount"
+        containerStyle={styles.inputGroup}
+        inputProps={{ keyboardType: 'numeric' }}
+      />
+
+      <FormInput
+        name="description"
+        label="Description"
+        placeholder="Optional description"
+        containerStyle={styles.inputGroup}
+      />
+
+      <ThemedButton title="Save" onPress={formMethods.handleSubmit(onSubmit)} />
     </ThemedView>
+    </FormProvider>
+    
   );
 }
 
 const styles = StyleSheet.create({
   container: {
-    gap: 8,
-    marginTop: 16,
+    padding: 16,
   },
-  row: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center",
-    gap: 8,
-  },
-  titleContainer: {
-    //flexDirection: "row",
-    //alignItems: "center",
-    //justifyContent: "space-between",
-    //paddingHorizontal: 16,
-    //paddingVertical: 8,
-    //borderBottomWidth: StyleSheet.hairlineWidth,
-    //borderBottomColor: "#ccc",
-    gap: 8,
-  },
-  mainContainer: {
-    //flex: 1,
-  },
-  footerContainer: {
-    flexDirection: "row",
-    //flex: 1,
-    justifyContent: "space-between",
-    //paddingHorizontal: 16,
-    //paddingVertical: 8,
-    //gap: 8,
-    width: "100%",
-  },
-  button: {},
-
-  title: {
-    fontSize: 18,
-    fontWeight: "600",
-    width: "100%",
-    textAlign: "center",
-    margin: 16,
-  },
-  label: {
-    marginTop: 8,
-  },
-  input: {
-    borderWidth: StyleSheet.hairlineWidth,
-    borderColor: "#ccc",
-    borderRadius: 4,
-    padding: 8,
-    marginTop: 4,
-  },
-  buttonRow: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    marginTop: 16,
+  inputGroup: {
+    marginBottom: 16,
   },
 });
