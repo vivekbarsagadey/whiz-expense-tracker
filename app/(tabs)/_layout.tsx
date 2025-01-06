@@ -1,10 +1,6 @@
 import { Tabs, useRouter } from "expo-router";
 import React, { useState } from "react";
-import {
-  Platform,
-  StyleSheet,
-  View
-} from "react-native";
+import { Platform, StyleSheet, View } from "react-native";
 
 import { HapticTab } from "@/components/HapticTab";
 import { IconSymbol } from "@/components/ui/IconSymbol";
@@ -48,7 +44,11 @@ export default function TabLayout() {
           options={{
             title: "Transaction",
             tabBarIcon: ({ color }) => (
-              <IconSymbol size={28} name="money.dollar" color={color} />
+              <IconSymbol
+                size={28}
+                name="dollarsign.circle.fill"
+                color={color}
+              />
             ),
           }}
         />
@@ -57,7 +57,11 @@ export default function TabLayout() {
           options={{
             title: "Recurring",
             tabBarIcon: ({ color }) => (
-              <IconSymbol size={28} name="recurring.triangle" color={color} />
+              <IconSymbol
+                size={28}
+                name="arrow.triangle.2.circlepath"
+                color={color}
+              />
             ),
           }}
         />
@@ -71,10 +75,8 @@ export default function TabLayout() {
           }}
         />
       </Tabs>
-      
     </View>
   );
 }
 
-const styles = StyleSheet.create({
-});
+const styles = StyleSheet.create({});
