@@ -10,6 +10,7 @@ interface AuthState {
   user: User | null;
   isLoading: boolean;
   error: string | null;
+  initializeAuth: () => Promise<void>;
   login: (email: string, password: string) => Promise<void>;
   register: (email: string, password: string) => Promise<void>;
   logout: () => Promise<void>;
@@ -20,6 +21,17 @@ export const useAuthStore = create<AuthState>((set) => ({
   user: null,
   isLoading: false,
   error: null,
+
+  initializeAuth: async () => {
+    try {
+      const storedUser = await AsyncStorage.getItem('user');
+      if (storedUser) {
+        set({ user: JSON.parse(storedUser) });
+      }
+    } catch (error) {
+      console.error('Error initializing auth:', error);
+    }
+  },
 
   login: async (email: string, password: string) => {
     set({ isLoading: true, error: null });
