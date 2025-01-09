@@ -53,6 +53,7 @@ export default function ForgotPasswordScreen() {
             title="Send Reset Link"
             onPress={formMethods.handleSubmit(onSubmit)}
             disabled={isLoading}
+            variant="primary"
           />
 
           <View style={styles.links}>

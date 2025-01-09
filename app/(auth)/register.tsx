@@ -66,6 +66,7 @@ export default function RegisterScreen() {
             title="Create Account"
             onPress={formMethods.handleSubmit(onSubmit)}
             disabled={isLoading}
+            variant="primary"
           />
 
           <View style={styles.links}>
