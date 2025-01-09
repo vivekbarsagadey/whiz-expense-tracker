@@ -14,6 +14,13 @@ export const Colors = {
     icon: '#687076',
     tabIconDefault: '#687076',
     tabIconSelected: tintColorLight,
+
+    error: '#FF3B30',
+    success: '#34C759',
+    warning: '#FFCC00',
+    textSecondary: '#666666',
+
+
     border: '#D1D5DB',
     income: '#2AA952',   // bright green
     expense: '#EB5757',  // red
@@ -25,6 +32,13 @@ export const Colors = {
     icon: '#9BA1A6',
     tabIconDefault: '#9BA1A6',
     tabIconSelected: tintColorDark,
+
+
+    error: '#FF3B30',
+    success: '#34C759',
+    warning: '#FFCC00',
+    textSecondary: '#666666',
+
     border: '#374151',
     income: '#27AE60',   // another green
     expense: '#EB5757',  // red still works
