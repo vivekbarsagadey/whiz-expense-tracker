@@ -5,12 +5,17 @@ import ParallaxScrollView from '@/components/ParallaxScrollView';
 import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
 import { useRouter } from 'expo-router';
+import HomeView from '@/components/HomeView';
+import { HeaderContainer } from '@/components/transaction/HeaderContainer';
+import { ActionButtons } from '@/components/transaction/ActionButtons';
 
 export default function HomeScreen() {
   const router = useRouter();
   return (
-    <ParallaxScrollView
+    <HomeView
       headerBackgroundColor={{ light: '#A1CEDC', dark: '#1D3D47' }}
+      headerContainer={<HeaderContainer />}
+      actionButtons={<ActionButtons />}
       headerImage={
         <Image
           source={require('@/assets/images/partial-react-logo.png')}
@@ -20,18 +25,7 @@ export default function HomeScreen() {
       <ThemedView style={styles.titleContainer}>
         <ThemedText type="title">This is Home Page</ThemedText>
       </ThemedView>
-
-      <TouchableOpacity
-              style={styles.floatingButton}
-              onPress={() => {
-                //setIsModalVisible(true);
-                router.push('/(tabs)/(transactions)/add-transaction');
-              }}
-            >
-              <ThemedText style={styles.plusText}>+</ThemedText>
-      </TouchableOpacity>
-      
-    </ParallaxScrollView>
+    </HomeView>
   );
 }
 
