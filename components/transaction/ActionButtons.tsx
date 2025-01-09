@@ -2,6 +2,7 @@ import { View, StyleSheet } from 'react-native';
 import { ThemedButton } from '@/components/ThemedButton';
 import { ThemedText } from '@/components/ThemedText';
 import { useRouter } from 'expo-router';
+import { ThemedView } from '@/components/ThemedView';
 
 interface ActionButton {
   title: string;
@@ -22,7 +23,7 @@ export function ActionButtons() {
   return (
     <View style={styles.container}>
       {buttons.map((button, index) => (
-        <View key={button.title} style={styles.buttonContainer}>
+        <ThemedView key={button.title} style={styles.buttonContainer}>
           <ThemedButton
             variant="plain"
             containerStyle={styles.iconButton}
@@ -37,7 +38,7 @@ export function ActionButtons() {
           <ThemedText type="default" style={styles.buttonText}>
             {button.title}
           </ThemedText>
-        </View>
+        </ThemedView>
       ))}
     </View>
   );
