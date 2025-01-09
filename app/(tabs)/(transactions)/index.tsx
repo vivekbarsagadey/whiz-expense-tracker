@@ -1,4 +1,4 @@
-import { FlatList, Image, StyleSheet } from 'react-native';
+import { FlatList, Image, StyleSheet, Text } from 'react-native';
 
 import ParallaxScrollView from '@/components/ParallaxScrollView';
 import { ThemedView } from '@/components/ThemedView';
@@ -31,6 +31,11 @@ export default function HomeScreen() {
         data={transactions}
         keyExtractor={(txn) => txn.id}
         renderItem={renderTransaction}
+        ListEmptyComponent={() => (
+          <ThemedView style={styles.emptyContainer}>
+            <Text style={styles.emptyText}>No transactions yet</Text>
+          </ThemedView>
+        )}
       />
       
     </ParallaxScrollView>
@@ -53,5 +58,13 @@ const styles = StyleSheet.create({
     bottom: 0,
     left: 0,
     position: 'absolute',
+  },
+  emptyContainer: {
+    padding: 20,
+    alignItems: 'center',
+  },
+  emptyText: {
+    fontSize: 16,
+    color: '#666',
   },
 });

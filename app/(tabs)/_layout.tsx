@@ -40,15 +40,11 @@ export default function TabLayout() {
           }}
         />
         <Tabs.Screen
-          name="(transactions)/index"
+          name="(transactions)"
           options={{
             title: "Transaction",
             tabBarIcon: ({ color }) => (
-              <IconSymbol
-                size={28}
-                name="dollarsign.circle.fill"
-                color={color}
-              />
+              <IconSymbol size={28} name="house.fill" color={color} />
             ),
           }}
         />
@@ -57,11 +53,7 @@ export default function TabLayout() {
           options={{
             title: "Recurring",
             tabBarIcon: ({ color }) => (
-              <IconSymbol
-                size={28}
-                name="arrow.triangle.2.circlepath"
-                color={color}
-              />
+              <IconSymbol size={28} name="house.fill" color={color} />
             ),
           }}
         />
